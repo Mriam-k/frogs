@@ -46,7 +46,7 @@ struct Button
 //-----------------------------------------------------------------------------
 
 //void     MoveBalls                (char* name_user, int* continue_game, COLORREF* ball_0_color, int* r_ball, int* sign_color_change);
-void     MoveBalls                (char* name_user, int* continue_game, int* r_ball, int* main_heroes);
+void     MoveBalls                (char* name_user, int* continue_game, int* r_ball, int* main_heroes, char* dislocation_file);
 void     DrawBackground           ();
 void     Count                    (int* balli, int* level, int* counter, Ball balls[]);
 void     CalculateBalli           (Ball balls[], int* balli);
@@ -68,6 +68,7 @@ void     Rect_Area_Button         (RECT area, COLORREF color, const char text[])
 int main ()
     {
     txCreateWindow (900, 700);
+    char dislocation_file[50] = "v2_Images";
 
     Button buttons[] = {{{40,  70,  225, 115}, RGB (255, 255, 128), "Username"     },
                         {{260, 70,  445, 115}, RGB (0  , 0  , 0  ), "Heroes:"      },
@@ -83,9 +84,6 @@ int main ()
     int continue_game = 0;
     int r_ball = 30;
     int main_heroes = 1;
-
-    //COLORREF ball_0_color = RGB (0, 128, 0);
-    //int sign_color_change = 0;
 
     txBegin ();
 
@@ -143,7 +141,7 @@ int main ()
         if (pressed_buttons == 8) break;
         }
 
-    MoveBalls (name_user, &continue_game, &r_ball, &main_heroes);
+    MoveBalls (name_user, &continue_game, &r_ball, &main_heroes, dislocation_file);
 
     txEnd ();
 
@@ -161,38 +159,21 @@ void DrawBackground ()
 
 //-----------------------------------------------------------------------------
 
-void MoveBalls (char* name_user, int* continue_game, int* r_ball, int* main_heroes)
+void MoveBalls (char* name_user, int* continue_game, int* r_ball, int* main_heroes, char* dislocation_file)
     {
     char name_file_image[100] = "";
-    char name_file_frog1[100] = "";
-    char name_file_frog2[100] = "";
-    char name_file_frog3[100] = "";
 
-    if (*main_heroes == 1 && *r_ball == 30) strncpy(name_file_image, "Images\\fly_60pix.bmp",       sizeof(name_file_image) - 1);
-    if (*main_heroes == 2 && *r_ball == 30) strncpy(name_file_image, "Images\\dragonfly_60pix.bmp", sizeof(name_file_image) - 1);
-    if (*main_heroes == 3 && *r_ball == 30) strncpy(name_file_image, "Images\\bumblebee_60pix.bmp", sizeof(name_file_image) - 1);
-
-    if (*main_heroes == 1 && *r_ball == 20) strncpy(name_file_image, "Images\\fly_40pix.bmp",       sizeof(name_file_image) - 1);
-    if (*main_heroes == 2 && *r_ball == 20) strncpy(name_file_image, "Images\\dragonfly_40pix.bmp", sizeof(name_file_image) - 1);
-    if (*main_heroes == 3 && *r_ball == 20) strncpy(name_file_image, "Images\\bumblebee_40pix.bmp", sizeof(name_file_image) - 1);
-
-    if (*r_ball == 30)
-        {
-        name_file_frog1 = "Images\\frog_N1_60pix.bmp";
-        name_file_frog2 = "Images\\frog_N2_60pix.bmp";
-        name_file_frog3 = "Images\\frog_N3_60pix.bmp";
-        }
-    if (*r_ball == 20)
-        {
-        name_file_frog1 = "Images\\frog_N1_40pix.bmp";
-        name_file_frog2 = "Images\\frog_N2_40pix.bmp";
-        name_file_frog3 = "Images\\frog_N3_40pix.bmp";
-        }
-
+    sprintf (name_file_image, "%s, %s, %d, %s, %d", dislocation_file, "\\", *main_heroes, "_", *r_ball);
     HDC main_character = txLoadImage (name_file_image);
-    HDC frog1          = txLoadImage (name_file_frog1);
-    HDC frog2          = txLoadImage (name_file_frog2);
-    HDC frog3          = txLoadImage (name_file_frog3);
+
+    sprintf (name_file_image, "%s, %s, %d", dislocation_file, "\\frog_N1_", *r_ball);
+    HDC frog1 = txLoadImage (name_file_image);
+
+    sprintf (name_file_image, "%s, %s, %d", dislocation_file, "\\frog_N2_", *r_ball);
+    HDC frog2 = txLoadImage (name_file_image);
+
+    sprintf (name_file_image, "%s, %s, %d", dislocation_file, "\\frog_N3_", *r_ball);
+    HDC frog3 = txLoadImage (name_file_image);
 
     if (!frog1) printf ("Не заружается картинка главного героя");
     if (!frog1) printf ("Не заружается картинка лягушки N1");

@@ -167,14 +167,14 @@ void MoveBalls (char* name_user, int* continue_game, int* r_ball, int* main_hero
     char name_file_frog1[100] = "";
     char name_file_frog2[100] = "";
     char name_file_frog3[100] = "";
-
+    
     if (*main_heroes == 1 && *r_ball == 30) strncpy(name_file_image, "Images\\fly_60pix.bmp",       sizeof(name_file_image) - 1);
     if (*main_heroes == 2 && *r_ball == 30) strncpy(name_file_image, "Images\\dragonfly_60pix.bmp", sizeof(name_file_image) - 1);
     if (*main_heroes == 3 && *r_ball == 30) strncpy(name_file_image, "Images\\bumblebee_60pix.bmp", sizeof(name_file_image) - 1);
 
-    if (*main_heroes == 1 && *r_ball == 20) strncpy(name_file_image, "Images\\fly_40pix.bmp",       sizeof(name_file_image) - 1);
-    if (*main_heroes == 2 && *r_ball == 20) strncpy(name_file_image, "Images\\dragonfly_40pix.bmp", sizeof(name_file_image) - 1);
-    if (*main_heroes == 3 && *r_ball == 20) strncpy(name_file_image, "Images\\bumblebee_40pix.bmp", sizeof(name_file_image) - 1);
+    if (*main_heroes == 1 && *r_ball == 20) name_file_image = "Images\\fly_40pix.bmp";
+    if (*main_heroes == 2 && *r_ball == 20) name_file_image = "Images\\dragonfly_40pix.bmp";
+    if (*main_heroes == 3 && *r_ball == 20) name_file_image = "Images\\bumblebee_40pix.bmp";
 
     if (*r_ball == 30)
         {
