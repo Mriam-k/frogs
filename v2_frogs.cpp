@@ -68,7 +68,8 @@ void     Rect_Area_Button         (RECT area, COLORREF color, const char text[])
 int main ()
     {
     txCreateWindow (900, 700);
-    char dislocation_file[50] = "v2_Images";
+    //char dislocation_file[50] = "v2_Images";
+    char dislocation_file[50] = "v3_Images";
 
     Button buttons[] = {{{40,  70,  225, 115}, RGB (255, 255, 128), "Username"     },
                         {{260, 70,  445, 115}, RGB (0  , 0  , 0  ), "Heroes:"      },
@@ -163,30 +164,31 @@ void MoveBalls (char* name_user, int* continue_game, int* r_ball, int* main_hero
     {
     char name_file_image[100] = "";
 
-    sprintf (name_file_image, "%s, %s, %d, %s, %d", dislocation_file, "\\", *main_heroes, "_", *r_ball);
+    sprintf (name_file_image, "%s%s%d%s%d%s", dislocation_file, "\\", *main_heroes, "_", *r_ball, ".bmp");
     HDC main_character = txLoadImage (name_file_image);
+    //txTextOut (txGetExtentX()/2, 5, name_file_image);
 
-    sprintf (name_file_image, "%s, %s, %d", dislocation_file, "\\frog_N1_", *r_ball);
-    HDC frog1 = txLoadImage (name_file_image);
+    sprintf (name_file_image, "%s%s%d%s", dislocation_file, "\\N1_", *r_ball, ".bmp");
+    HDC character1 = txLoadImage (name_file_image);
 
-    sprintf (name_file_image, "%s, %s, %d", dislocation_file, "\\frog_N2_", *r_ball);
-    HDC frog2 = txLoadImage (name_file_image);
+    //sprintf (name_file_image, "%s%s%d%s", dislocation_file, "\\N2_", *r_ball, ".bmp");
+    //HDC character2 = txLoadImage (name_file_image);
 
-    sprintf (name_file_image, "%s, %s, %d", dislocation_file, "\\frog_N3_", *r_ball);
-    HDC frog3 = txLoadImage (name_file_image);
+    //sprintf (name_file_image, "%s%s%d%s", dislocation_file, "\\N3_", *r_ball, ".bmp");
+    //HDC character3 = txLoadImage (name_file_image);
 
-    if (!frog1) printf ("Не заружается картинка главного героя");
-    if (!frog1) printf ("Не заружается картинка лягушки N1");
-    if (!frog2) printf ("Не заружается картинка лягушки N2");
-    if (!frog3) printf ("Не заружается картинка лягушки N3");
+    if (!main_character) printf ("Не заружается картинка главного персонажа");
+    if (!character1)     printf ("Не заружается картинка персонажа N1");
+    //if (!character2)     printf ("Не заружается картинка персонажа N2");
+    //if (!character3)     printf ("Не заружается картинка персонажа N3");
 
     Ball balls[N_BALLS] = {{320, 110, 0, 0, *r_ball, main_character},
-                           {360, 400, 2, 2, *r_ball, frog1         },
-                           {420, 250, 3, 6, *r_ball, frog1         },
-                           {320, 630, 4, 1, *r_ball, frog2         },
-                           {530, 120, 5, 7, *r_ball, frog2         },
-                           {490, 300, 3, 2, *r_ball, frog3         },
-                           {510, 600, 2, 5, *r_ball, frog3         }};
+                           {360, 400, 2, 2, *r_ball, character1    },
+                           {420, 250, 3, 6, *r_ball, character1    },
+                           {320, 630, 4, 1, *r_ball, character1    },
+                           {530, 120, 5, 7, *r_ball, character1    },
+                           {490, 300, 3, 2, *r_ball, character1    },
+                           {510, 600, 2, 5, *r_ball, character1    }};
 
     int  balli = 0;
     int  level = 1;
@@ -231,9 +233,9 @@ void MoveBalls (char* name_user, int* continue_game, int* r_ball, int* main_hero
         txSleep (GLOBAL_SLEEP);
         }
 
-        txDeleteDC (frog1);
-        txDeleteDC (frog2);
-        txDeleteDC (frog3);
+        txDeleteDC (character1);
+        //txDeleteDC (character2);
+        //txDeleteDC (character3);
         txDeleteDC (main_character);
 
     WriteToFile (&balli, &level, balls, name_user);
