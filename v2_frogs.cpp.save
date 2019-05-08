@@ -1,5 +1,7 @@
 #include "TXLib.h"
 #include <stdio.h>
+#include <sys/types.h>
+#include <dirent.h>
 //#include "R_W_Color_in_from_file.h"
 
 const double GLOBAL_SLEEP = txQueryPerformance () * 100;
@@ -15,6 +17,8 @@ const int BUTTON_HEROES_DRAGONFLY = 3;
 const int BUTTON_HEROES_BUMBLEBEE = 4;
 const int BUTTON_HEROES_SIZE_40   = 6;
 const int BUTTON_HEROES_SIZE_60   = 7;
+const int VERSION_GAME_v1         = 9;
+const int VERSION_GAME_v2         = 10;
 
 //-----------------------------------------------------------------------------
 
@@ -68,9 +72,10 @@ void     Rect_Area_Button         (RECT area, COLORREF color, const char text[])
 int main ()
     {
     txCreateWindow (900, 700);
-    char dislocation_file[50] = "v2_Images";
+    char dislocation_file[50] = "";
+    //char dislocation_file[50] = "v3_Images";
 
-    Button buttons[] = {{{40,  70,  225, 115}, RGB (255, 255, 128), "Username"     },
+    Button buttons[] = {{{700, 70,  885, 115}, RGB (255, 255, 128), "Username"     },
                         {{260, 70,  445, 115}, RGB (0  , 0  , 0  ), "Heroes:"      },
                         {{260, 125, 445, 170}, RGB (255, 255, 70 ), "fly"          },
                         {{260, 180, 445, 225}, RGB (255, 255, 70 ), "dragonfly"    },
@@ -78,7 +83,10 @@ int main ()
                         {{480, 70,  665, 115}, RGB (0  , 0  , 0  ), "Heroes Size:" },
                         {{480, 125, 665, 170}, RGB (255, 255, 70 ), "40 pix"       },
                         {{480, 180, 665, 225}, RGB (255, 255, 70 ), "60 pix"       },
-                        {{700, 70,  885, 115}, RGB (255, 255, 128), "Game Start"   }};
+                        {{40,  70,  225, 115}, RGB (0  , 0  , 0  ), "Skin"         },
+                        {{40,  70,  225, 115}, RGB (255, 255, 128), "version v1"   },
+                        {{40, 290, 665, 335}, RGB (255, 255, 128), "version v2"   },
+                        {{700, 180, 885, 225}, RGB (255, 255, 128), "Game Start"   }};
 
     char name_user[100] = "user";
     int continue_game = 0;
@@ -134,11 +142,25 @@ int main ()
                 txClear ();
                 break;
 
+            case VERSION_GAME_v1:
+                sprintf (dislocation_file, "%s", "v1_Images");
+                printf ("version of game = v1_Images\n");
+                txSetFillColor (TX_BLACK);
+                txClear ();
+                break;
+
+            case VERSION_GAME_v2:
+                sprintf (dislocation_file, "%s", "v2_Images");
+                printf ("version of game = v2_Images\n");
+                txSetFillColor (TX_BLACK);
+                txClear ();
+                break;
+
             default:
                 break;
             }
 
-        if (pressed_buttons == 8) break;
+        if (pressed_buttons == 11) break;
         }
 
     MoveBalls (name_user, &continue_game, &r_ball, &main_heroes, dislocation_file);
@@ -168,26 +190,26 @@ void MoveBalls (char* name_user, int* continue_game, int* r_ball, int* main_hero
     //txTextOut (txGetExtentX()/2, 5, name_file_image);
 
     sprintf (name_file_image, "%s%s%d%s", dislocation_file, "\\N1_", *r_ball, ".bmp");
-    HDC hero1 = txLoadImage (name_file_image);
+    HDC character1 = txLoadImage (name_file_image);
 
-    sprintf (name_file_image, "%s%s%d%s", dislocation_file, "\\N2_", *r_ball, ".bmp");
-    HDC hero2 = txLoadImage (name_file_image);
+    //sprintf (name_file_image, "%s%s%d%s", dislocation_file, "\\N2_", *r_ball, ".bmp");
+    //HDC character2 = txLoadImage (name_file_image);
 
-    sprintf (name_file_image, "%s%s%d%s", dislocation_file, "\\N3_", *r_ball, ".bmp");
-    HDC hero3 = txLoadImage (name_file_image);
+    //sprintf (name_file_image, "%s%s%d%s", dislocation_file, "\\N3_", *r_ball, ".bmp");
+    //HDC character3 = txLoadImage (name_file_image);
 
-    if (!main_character1) printf ("Не заружается картинка главного героя");
-    if (!hero1) printf ("Не заружается картинка лягушки N1");
-    if (!hero2) printf ("Не заружается картинка лягушки N2");
-    if (!hero3) printf ("Не заружается картинка лягушки N3");
+    if (!main_character) printf ("Не заружается картинка главного персонажа");
+    if (!character1)     printf ("Не заружается картинка персонажа N1");
+    //if (!character2)     printf ("Не заружается картинка персонажа N2");
+    //if (!character3)     printf ("Не заружается картинка персонажа N3");
 
     Ball balls[N_BALLS] = {{320, 110, 0, 0, *r_ball, main_character},
-                           {360, 400, 2, 2, *r_ball, character1         },
-                           {420, 250, 3, 6, *r_ball, character1         },
-                           {320, 630, 4, 1, *r_ball, character2         },
-                           {530, 120, 5, 7, *r_ball, character2         },
-                           {490, 300, 3, 2, *r_ball, character3         },
-                           {510, 600, 2, 5, *r_ball, character3         }};
+                           {360, 400, 2, 2, *r_ball, character1    },
+                           {420, 250, 3, 6, *r_ball, character1    },
+                           {320, 630, 4, 1, *r_ball, character1    },
+                           {530, 120, 5, 7, *r_ball, character1    },
+                           {490, 300, 3, 2, *r_ball, character1    },
+                           {510, 600, 2, 5, *r_ball, character1    }};
 
     int  balli = 0;
     int  level = 1;
@@ -232,9 +254,9 @@ void MoveBalls (char* name_user, int* continue_game, int* r_ball, int* main_hero
         txSleep (GLOBAL_SLEEP);
         }
 
-        txDeleteDC (hero1);
-        txDeleteDC (hero2);
-        txDeleteDC (hero3);
+        txDeleteDC (character1);
+        //txDeleteDC (character2);
+        //txDeleteDC (character3);
         txDeleteDC (main_character);
 
     WriteToFile (&balli, &level, balls, name_user);

@@ -1,0 +1,21 @@
+#include "TXLib.h"
+#include <stdio.h>
+
+//-----------------------------------------------------------------------------
+
+int main ()
+    {
+    /*char text[10] = "";
+    printf ("Введите буквы от А до Д\n");
+    scanf ("%[А-В]", text);
+    printf ("%s\n", text);*/
+
+    int number_hero = 0, size_hero = 0;
+    char name_hero[50] = "";
+
+    printf ("Введите название файла\n");
+    scanf ("%d_%d_%s",&number_hero, &size_hero, name_hero);
+    printf ("номер героя: %d, размер: %d, имя: %s", number_hero, size_hero, name_hero);
+
+    return 0;
+    }

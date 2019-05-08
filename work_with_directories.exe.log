@@ -1,0 +1,252 @@
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\Cpp\games\frogs\work_with_directories.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x76B1D193 в функции wtoi(). Попытка прочесть данные по адресу 0x00000008. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300], Instance: 0x004FE2D4 (32-bit), Flags: Cmdre0, Thread: 0x1560 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x76B1D193 in C:\Windows\syswow64\msvcrt.dll: wtoi()
+# 1 0x76B2C5FF in C:\Windows\syswow64\msvcrt.dll: printf()
+
+# 2 0x0042665F in C:\Cpp\games\frogs\work_with_directories.exe: main() at C:/Cpp/games/frogs/work_with_directories.cpp (22):
+
+     20:         {
+     21:         dirent *entry = readdir(dir_game);
+=>   22:         printf ("%d, %s", entry -> d_namlen, entry -> d_name[FILENAME_MAX]);
+     23: 
+     24:         if (entry != NULL) break;
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h
+Compiled:	May  6 2019 00:03:22, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	May 06 2019 00:03:27
+
+Run file:	C:\Cpp\games\frogs\work_with_directories.exe
+Directory:	C:\Cpp\games\frogs
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Cpp\games\frogs\work_with_directories.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x76B1D193 в функции wtoi(). Попытка прочесть данные по адресу 0x00000008. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300], Instance: 0x004FE2D4 (32-bit), Flags: Cmdre0, Thread: 0x1560 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x76B1D193 in C:\Windows\syswow64\msvcrt.dll: wtoi()
+# 1 0x76B2C5FF in C:\Windows\syswow64\msvcrt.dll: printf()
+
+# 2 0x0042665F in C:\Cpp\games\frogs\work_with_directories.exe: main() at C:/Cpp/games/frogs/work_with_directories.cpp (22):
+
+     20:         {
+     21:         dirent *entry = readdir(dir_game);
+=>   22:         printf ("%d, %s", entry -> d_namlen, entry -> d_name[FILENAME_MAX]);
+     23: 
+     24:         if (entry != NULL) break;
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h
+Compiled:	May  6 2019 00:03:22, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	May 06 2019 00:03:27
+
+Run file:	C:\Cpp\games\frogs\work_with_directories.exe
+Directory:	C:\Cpp\games\frogs
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\Cpp\games\frogs\work_with_directories.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0042664A в функции main() в файле C:/Cpp/games/frogs/work_with_directories.cpp на строке 23. Попытка прочесть данные по адресу 0x00000006. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300], Instance: 0x004FE2D4 (32-bit), Flags: Cmdre0, Thread: 0x1420 (Main), GetLastError(): 18 (Больше файлов не осталось). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0042664A in C:\Cpp\games\frogs\work_with_directories.exe: main() at C:/Cpp/games/frogs/work_with_directories.cpp (23):
+
+     21:         dirent *file_data = readdir(dir_game);
+     22:         n = n + 1;
+=>   23:         printf ("%d, %d, %s\n", n, file_data -> d_namlen, file_data -> d_name);
+     24: 
+     25:         if (file_data == NULL) break;
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h
+Compiled:	May  6 2019 00:31:51, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	May 06 2019 00:31:56
+
+Run file:	C:\Cpp\games\frogs\work_with_directories.exe
+Directory:	C:\Cpp\games\frogs
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Cpp\games\frogs\work_with_directories.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0042664A в функции main() в файле C:/Cpp/games/frogs/work_with_directories.cpp на строке 23. Попытка прочесть данные по адресу 0x00000006. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300], Instance: 0x004FE2D4 (32-bit), Flags: Cmdre0, Thread: 0x1420 (Main), GetLastError(): 18 (Больше файлов не осталось). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0042664A in C:\Cpp\games\frogs\work_with_directories.exe: main() at C:/Cpp/games/frogs/work_with_directories.cpp (23):
+
+     21:         dirent *file_data = readdir(dir_game);
+     22:         n = n + 1;
+=>   23:         printf ("%d, %d, %s\n", n, file_data -> d_namlen, file_data -> d_name);
+     24: 
+     25:         if (file_data == NULL) break;
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h
+Compiled:	May  6 2019 00:31:51, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	May 06 2019 00:31:56
+
+Run file:	C:\Cpp\games\frogs\work_with_directories.exe
+Directory:	C:\Cpp\games\frogs
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\Cpp\games\frogs\work_with_directories.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0042664A в функции main() в файле C:/Cpp/games/frogs/work_with_directories.cpp на строке 23. Попытка прочесть данные по адресу 0x00000006. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300], Instance: 0x004FE2D4 (32-bit), Flags: Cmdre0, Thread: 0x155C (Main), GetLastError(): 18 (Больше файлов не осталось). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0042664A in C:\Cpp\games\frogs\work_with_directories.exe: main() at C:/Cpp/games/frogs/work_with_directories.cpp (23):
+
+     21:         dirent *file_data = readdir(dir_game);
+     22:         n = n + 1;
+=>   23:         printf ("%d, %d, %1s\n", n, file_data -> d_namlen, file_data -> d_name);
+     24: 
+     25:         if (file_data == NULL) break;
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h
+Compiled:	May  6 2019 00:38:54, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	May 06 2019 00:38:59
+
+Run file:	C:\Cpp\games\frogs\work_with_directories.exe
+Directory:	C:\Cpp\games\frogs
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Cpp\games\frogs\work_with_directories.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0042664A в функции main() в файле C:/Cpp/games/frogs/work_with_directories.cpp на строке 23. Попытка прочесть данные по адресу 0x00000006. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300], Instance: 0x004FE2D4 (32-bit), Flags: Cmdre0, Thread: 0x155C (Main), GetLastError(): 18 (Больше файлов не осталось). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0042664A in C:\Cpp\games\frogs\work_with_directories.exe: main() at C:/Cpp/games/frogs/work_with_directories.cpp (23):
+
+     21:         dirent *file_data = readdir(dir_game);
+     22:         n = n + 1;
+=>   23:         printf ("%d, %d, %1s\n", n, file_data -> d_namlen, file_data -> d_name);
+     24: 
+     25:         if (file_data == NULL) break;
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h
+Compiled:	May  6 2019 00:38:54, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	May 06 2019 00:38:59
+
+Run file:	C:\Cpp\games\frogs\work_with_directories.exe
+Directory:	C:\Cpp\games\frogs
+
+--------------------------------------------------

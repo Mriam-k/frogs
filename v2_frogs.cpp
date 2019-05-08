@@ -1,5 +1,7 @@
 #include "TXLib.h"
 #include <stdio.h>
+#include <sys/types.h>
+#include <dirent.h>
 //#include "R_W_Color_in_from_file.h"
 
 const double GLOBAL_SLEEP = txQueryPerformance () * 100;
@@ -15,6 +17,8 @@ const int BUTTON_HEROES_DRAGONFLY = 3;
 const int BUTTON_HEROES_BUMBLEBEE = 4;
 const int BUTTON_HEROES_SIZE_40   = 6;
 const int BUTTON_HEROES_SIZE_60   = 7;
+const int VERSION_GAME_v1         = 9;
+const int VERSION_GAME_v2         = 10;
 
 //-----------------------------------------------------------------------------
 
@@ -68,10 +72,10 @@ void     Rect_Area_Button         (RECT area, COLORREF color, const char text[])
 int main ()
     {
     txCreateWindow (900, 700);
-    //char dislocation_file[50] = "v2_Images";
-    char dislocation_file[50] = "v3_Images";
+    char dislocation_file[50] = "";
+    //char dislocation_file[50] = "v3_Images";
 
-    Button buttons[] = {{{40,  70,  225, 115}, RGB (255, 255, 128), "Username"     },
+    Button buttons[] = {{{700, 70,  885, 115}, RGB (255, 255, 70 ), "Username"     },
                         {{260, 70,  445, 115}, RGB (0  , 0  , 0  ), "Heroes:"      },
                         {{260, 125, 445, 170}, RGB (255, 255, 70 ), "fly"          },
                         {{260, 180, 445, 225}, RGB (255, 255, 70 ), "dragonfly"    },
@@ -79,7 +83,10 @@ int main ()
                         {{480, 70,  665, 115}, RGB (0  , 0  , 0  ), "Heroes Size:" },
                         {{480, 125, 665, 170}, RGB (255, 255, 70 ), "40 pix"       },
                         {{480, 180, 665, 225}, RGB (255, 255, 70 ), "60 pix"       },
-                        {{700, 70,  885, 115}, RGB (255, 255, 128), "Game Start"   }};
+                        {{40,  70,  225, 115}, RGB (0  , 0  , 0  ), "Skin"         },
+                        {{40,  125, 225, 170}, RGB (255, 255, 70 ), "version v1"   },
+                        {{40,  180, 225, 225}, RGB (255, 255, 70 ), "version v2"   },
+                        {{700, 180, 885, 225}, RGB (255, 255, 128), "Game Start"   }};
 
     char name_user[100] = "user";
     int continue_game = 0;
@@ -135,11 +142,25 @@ int main ()
                 txClear ();
                 break;
 
+            case VERSION_GAME_v1:
+                sprintf (dislocation_file, "%s", "v1_Images");
+                printf ("version of game = v1_Images\n");
+                txSetFillColor (TX_BLACK);
+                txClear ();
+                break;
+
+            case VERSION_GAME_v2:
+                sprintf (dislocation_file, "%s", "v2_Images");
+                printf ("version of game = v2_Images\n");
+                txSetFillColor (TX_BLACK);
+                txClear ();
+                break;
+
             default:
                 break;
             }
 
-        if (pressed_buttons == 8) break;
+        if (pressed_buttons == 11) break;
         }
 
     MoveBalls (name_user, &continue_game, &r_ball, &main_heroes, dislocation_file);
