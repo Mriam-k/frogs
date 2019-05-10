@@ -5,14 +5,14 @@
 
 int main ()
     {
-    int  number_hero = 0,   size_hero = 0;
+    int  number_hero = 0,   size_hero = 0, x = 0;
     char name_hero[50] = "";
 
     printf ("Введите название файла\n");
 
-    if (scanf ("%d_%d_%[a-z-A-Z]",&number_hero, &size_hero, name_hero) == 3)
-        printf ("номер героя: %d, размер: %d, имя героя: %s", number_hero, size_hero, name_hero);
-    else printf ("сбой при чтении имени файла");
+    if (scanf ("%d_%d_%[a-z-A-Z].bmp%d",&number_hero, &size_hero, name_hero, &x) == 4)
+        printf ("номер героя: %d, размер: %d, имя героя: %s, x=%d\n", number_hero, size_hero, name_hero, x);
+    else printf ("сбой при чтении имени файла\n");
 
     return 0;
     }

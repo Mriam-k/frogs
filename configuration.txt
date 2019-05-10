@@ -1,0 +1,8 @@
+1_20_fly.bmp
+1_30_fly.bmp
+2_20_dragonfly.bmp
+2_30_dragonfly.bmp
+3_20_bumblebee.bmp
+3_30_bumblebee.bmp
+4_20_frog.bmp
+4_30_frog.bmp

@@ -5,13 +5,67 @@
 
 //-----------------------------------------------------------------------------
 
+int CreateFileConfig (char name_file);
+
+//-----------------------------------------------------------------------------
+
 int main ()
+    {
+    int  number_hero = 0,   size_hero = 0;
+    char name_hero[50] = "";
+    
+    FILE *file_config_r = fopen ("configuration.txt", "r");
+
+    if (file_config_r == NULL)
+        {
+        printf ("Ошибка при открытии файла с конфигурацией, для чтения");
+        fclose (file_config_r);
+        closedir (dir_game);
+        return 0;
+        }
+
+    for (int str = 1; !feof (file_config_r); str++)
+            {
+            char text[100] = "";
+            fgets (text, sizeof (text), file_config_r);
+
+            if (text[0] == '\0') continue;
+
+            if (sscanf (text, " %d_%d_%[^.].bmp", &number_hero, &size_hero, name_hero) == 3)
+                printf ("номер героя: %d, размер: %d, имя героя: %s\n", number_hero, size_hero, name_hero);
+            else
+                {
+                printf ("Ошибка чтения configuration.txt (%d): неверный формат имени файла %s\n", str, text);
+
+                // Сбой при чтении имени файла N1_20_frog.bmp из configuration.txt в строке 5
+                // Ошибка чтения configuration.txt (5): неверный формат имени файла N1_20_frog.bmp
+
+                break;
+                }
+            }
+ 
+    fclose (file_config_r);
+
+    return 0;
+    }
+
+//-----------------------------------------------------------------------------
+int CreateFileConfig (char name_file)
     {
     DIR *dir_game = opendir("v1_Images");
 
     if (!dir_game)
         {
-        perror("При открытии директории, произошла ошибка: ");
+        perror ("При открытии директории, произошла ошибка");
+        return 0;
+        }
+
+    FILE *file_config_w = fopen ("configuration.txt", "w");
+
+    if (file_config_w == NULL)
+        {
+        printf ("Ошибка при открытии файла с конфигурацией, на запись");
+        closedir (dir_game);
         return 0;
         }
 
@@ -19,15 +73,18 @@ int main ()
     while (true)
         {
         dirent *file_data = readdir(dir_game);
-        n = n + 1;
-        printf ("%d, %d, %s\n", n, file_data -> d_namlen, file_data -> d_name);
 
-        if (file_data != NULL) break;
+        if (file_data == NULL) break;
+
+        n = n + 1;
+        //printf ("%d, %d, %s\n", n, file_data -> d_namlen, file_data -> d_name);
+
+        if (file_data -> d_name[0] == '.') continue;
+
+        fprintf (file_config_w, "%s\n", file_data -> d_name);
         }
 
+    fclose  (file_config_w);
+    
     closedir (dir_game);
-
-    return 0;
     }
-
-//-----------------------------------------------------------------------------
