@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <dirent.h>
-//#include "R_W_Color_in_from_file.h"
 
 const double GLOBAL_SLEEP = txQueryPerformance () * 100;
 
@@ -17,8 +16,6 @@ const int BUTTON_HEROES_DRAGONFLY = 3;
 const int BUTTON_HEROES_BUMBLEBEE = 4;
 const int BUTTON_HEROES_SIZE_40   = 6;
 const int BUTTON_HEROES_SIZE_60   = 7;
-const int VERSION_GAME_v1         = 9;
-const int VERSION_GAME_v2         = 10;
 
 //-----------------------------------------------------------------------------
 
@@ -28,11 +25,8 @@ struct Ball
     int vx, vy;
     int r;
     HDC picture;
-    //COLORREF color_contour, color_ball;
-    //int thickness_contour;
     int state_ball;
 
-    //void Drow ();
     void Drive ();
     void MoveStrategiya (int dt);
     void Level_game ();
@@ -49,7 +43,6 @@ struct Button
 
 //-----------------------------------------------------------------------------
 
-//void     MoveBalls                (char* name_user, int* continue_game, COLORREF* ball_0_color, int* r_ball, int* sign_color_change);
 void     MoveBalls                (char* name_user, int* continue_game, int* r_ball, int* main_heroes, char* dislocation_file);
 void     DrawBackground           ();
 void     Count                    (int* balli, int* level, int* counter, Ball balls[]);
@@ -59,7 +52,7 @@ double   CalculateDistance        (Ball *b1, Ball *b2);
 int      ReadFromFile             (int* balli, int* level, Ball balls[], char* name_user);
 int      WriteToFile              (int* balli, int* level, Ball balls[], char* name_user);
 
-int      Menu               (Button buttons[], int N_Button = 0);
+int      Menu                     (Button buttons[], int N_Button = 0);
 
 int      DialogueWithUser_Username(char* name_user, int* continue_game);
 
@@ -67,37 +60,44 @@ int      Pause                    ();
 bool     In_area                  (POINT mouse_pos, RECT area);
 void     Rect_Area_Button         (RECT area, COLORREF color, const char text[]);
 
-int CreateFileConfig (const char name_file[50]);
+int      CreateFileConfig         (const char name_file[50], char name_directory[50]);
+int      Read_Configuration_File  (char* heroes_1, char* heroes_2, char* heroes_3);
+
+int      Press_Button_MenuSkin    (Button buttons_skin[], char* heroes_1, char* heroes_2, char* heroes_3);
 
 //-----------------------------------------------------------------------------
 
 int main ()
     {
     txCreateWindow (900, 700);
-    //char dislocation_file[50] = "";
-    //char dislocation_file[50] = "v3_Images";
 
+    txBegin ();
 
+    char dislocation_file[50] = "v3_Images";
+    char heroes_1[50] = "";
+    char heroes_2[50] = "";
+    char heroes_3[50] = "";
 
-    Button buttons[] = {{{700, 70,  885, 115}, RGB (255, 255, 70 ), "Username"     },
-                        {{260, 70,  445, 115}, RGB (0  , 0  , 0  ), "Heroes:"      },
-                        {{260, 125, 445, 170}, RGB (255, 255, 70 ), "fly"          },
-                        {{260, 180, 445, 225}, RGB (255, 255, 70 ), "dragonfly"    },
-                        {{260, 235, 445, 280}, RGB (255, 255, 70 ), "bumblebee"    },
-                        {{480, 70,  665, 115}, RGB (0  , 0  , 0  ), "Heroes Size:" },
-                        {{480, 125, 665, 170}, RGB (255, 255, 70 ), "40 pix"       },
-                        {{480, 180, 665, 225}, RGB (255, 255, 70 ), "60 pix"       },
-                        {{40,  70,  225, 115}, RGB (0  , 0  , 0  ), "Skin"         },
-                        {{40,  125, 225, 170}, RGB (255, 255, 70 ), "version v1"   },
-                        {{40,  180, 225, 225}, RGB (255, 255, 70 ), "version v2"   },
-                        {{700, 180, 885, 225}, RGB (255, 255, 128), "Game Start"   }};
+    //Press_Button_MenuSkin (buttons_skin, heroes_1, heroes_2, heroes_3);
+
+    Button buttons[] = {{{40,  70,  225, 115}, RGB (255, 255, 128), "Username"      }, // 0
+                        {{260, 70,  445, 115}, RGB (0  , 0  , 0  ), "Heroes:"       }, // 1
+                        {{260, 125, 445, 170}, RGB (255, 255, 70 ), "(Hero 1 name)" }, // 2
+                        {{260, 180, 445, 225}, RGB (255, 255, 70 ), "(Hero 2 name)" }, // 3
+                        {{260, 235, 445, 280}, RGB (255, 255, 70 ), "(Hero 3 name)" }, // 4
+                        {{480, 70,  665, 115}, RGB (0  , 0  , 0  ), "Heroes Size:"  }, // 5
+                        {{480, 125, 665, 170}, RGB (255, 255, 70 ), "40 pix"        }, // 6
+                        {{480, 180, 665, 225}, RGB (255, 255, 70 ), "60 pix"        }, // 7
+                        {{700, 70,  885, 115}, RGB (255, 255, 128), "Game Start"    }};// 8
+
+    strncpy (buttons[2].text, heroes_1, sizeof (buttons[2].text) - 1);
+    strncpy (buttons[3].text, heroes_2, sizeof (buttons[3].text) - 1);
+    strncpy (buttons[4].text, heroes_3, sizeof (buttons[4].text) - 1);
 
     char name_user[100] = "user";
     int continue_game = 0;
     int r_ball = 30;
     int main_heroes = 1;
-
-    txBegin ();
 
     while (true)
         {
@@ -146,25 +146,11 @@ int main ()
                 txClear ();
                 break;
 
-            case VERSION_GAME_v1:
-                sprintf (dislocation_file, "%s", "v1_Images");
-                printf ("version of game = v1_Images\n");
-                txSetFillColor (TX_BLACK);
-                txClear ();
-                break;
-
-            case VERSION_GAME_v2:
-                sprintf (dislocation_file, "%s", "v2_Images");
-                printf ("version of game = v2_Images\n");
-                txSetFillColor (TX_BLACK);
-                txClear ();
-                break;
-
             default:
                 break;
             }
 
-        if (pressed_buttons == 11) break;
+        if (pressed_buttons == 8) break;
         }
 
     MoveBalls (name_user, &continue_game, &r_ball, &main_heroes, dislocation_file);
@@ -581,9 +567,9 @@ bool In_area (POINT mouse_pos, RECT area)
     }
 
 //-----------------------------------------------------------------------------
-int CreateFileConfig (const char name_file[50])
+int CreateFileConfig (const char name_file[50], char name_directory[50])
     {
-    DIR *dir_game = opendir("v1_Images");
+    DIR *dir_game = opendir(name_directory);
 
     if (!dir_game)
         {
@@ -618,6 +604,89 @@ int CreateFileConfig (const char name_file[50])
     fclose  (file_config_w);
 
     closedir (dir_game);
+
+    return 1;
+    }
+
+//-----------------------------------------------------------------------------
+int Read_Configuration_File (char* heroes_1, char* heroes_2, char* heroes_3)
+    {
+    int  number_hero = 0,   size_hero = 0;
+    char name_hero[50] = "";
+
+    if (access ("configuration.txt", 0) != 0) CreateFileConfig ("configuration.txt", "v1_Images");
+
+    FILE *file_config_r = fopen ("configuration.txt", "r");
+
+    if (file_config_r == NULL)
+        {
+        printf ("Ошибка при открытии файла с конфигурацией, для чтения");
+        fclose (file_config_r);
+        return 0;
+        }
+
+    for (int str = 1; !feof (file_config_r); str++)
+            {
+            char text[100] = "";
+            fgets (text, sizeof (text), file_config_r);
+
+            if (text[0] == '\0') continue;
+
+            if (sscanf (text, " %d_%d_%[^.].bmp", &number_hero, &size_hero, name_hero) == 3)
+                {
+                if ((number_hero == 1) && (size_hero == 20)) sprintf (heroes_1, " %s", name_hero);
+                if ((number_hero == 2) && (size_hero == 20)) sprintf (heroes_2, " %s", name_hero);
+                if ((number_hero == 3) && (size_hero == 20)) sprintf (heroes_3, " %s", name_hero);
+                //printf ("номер героя: %d, размер: %d, имя героя: %s\n", number_hero, size_hero, name_hero);
+                }
+            else
+                {
+                printf ("Ошибка чтения configuration.txt (%d): неверный формат имени файла %s\n", str, text);
+                break;
+                }
+            }
+
+    fclose (file_config_r);
+
+    return 0;
+    }
+
+//-----------------------------------------------------------------------------
+
+int Press_Button_MenuSkin (char* heroes_1, char* heroes_2, char* heroes_3)
+    {
+    Button buttons_skin[] = {{{210, 70,  445, 115}, RGB (0  , 0  , 0  ), "Skin"       },
+                             {{210, 180, 445, 225}, RGB (255, 255, 70 ), "version N1" },
+                             {{210, 235, 445, 280}, RGB (255, 255, 70 ), "version N2" },
+                             {{480, 207, 665, 252}, RGB (255, 255, 128), "NEXT"       }};
+
+    while (true)
+        {
+        int pressed_buttons_skin = Menu (buttons_skin, sizeof (buttons_skin) / sizeof (buttons_skin[0]));
+
+        switch (pressed_buttons_skin)
+            {
+            case 1:
+                CreateFileConfig ("configuration.txt", "v1_Images");
+                printf ("Вы выбрали skin N1\n");
+                break;
+
+            case 2:
+                CreateFileConfig ("configuration.txt", "v2_Images");
+                printf ("Вы выбрали skin N2\n");
+                break;
+
+            case 3:
+                Read_Configuration_File (heroes_1, heroes_2, heroes_3);
+                txSetFillColor (TX_BLACK);
+                txClear();
+                return 1;
+
+            default:
+                break;
+            }
+
+        }
 
     return 1;
     }
