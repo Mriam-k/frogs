@@ -1,8 +1,8 @@
-1_20_fly.bmp
-1_30_fly.bmp
-2_20_dragonfly.bmp
-2_30_dragonfly.bmp
-3_20_bumblebee.bmp
-3_30_bumblebee.bmp
-4_20_frog.bmp
-4_30_frog.bmp
+1_20_worm.bmp
+1_30_worm.bmp
+2_20_caterpillar.bmp
+2_30_caterpillar.bmp
+3_20_snail.bmp
+3_30_snail.bmp
+4_20_hedgehog.bmp
+4_30_hedgehog.bmp
