@@ -1,0 +1,264 @@
+
+--------------------------------------------------
+TXLib сообщает:
+
+Программа: C:\Cpp\games\frogs\v4_frogs.exe, файл: C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h, строка: 11367, функция: bool {anonymous}::TX::txTransparentBlt(HDC, double, double, double, double, HDC, double, double, COLORREF),
+
+Сообщение: Параметр "sourceImage" неверен. Возможно, этот холст не создан, или уже уничтожен, или не загрузилась картинка.
+
+#1: TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300], Instance: 0x005042D4 (32-bit), Flags: CMdRe0, Thread: 0x11D4 (Main), GetLastError(): 13 (Недопустимые данные). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041FA08 in C:\Cpp\games\frogs\v4_frogs.exe: txTransparentBlt() at C:/Users/Home/Downloads/CodeBlocks/TX/TXLib.h (11367)
+
+# 1 0x004272C7 in C:\Cpp\games\frogs\v4_frogs.exe: MoveBalls() at C:/Cpp/games/frogs/v4_frogs.cpp (177):
+
+    175: 
+    176:         for (int i = 0; i < N_BALLS; i++)
+=>  177:             txTransparentBlt (txDC(), (balls[i].x - balls[i].r), (balls[i].y - balls[i].r), 0, 0, balls[i].picture);
+    178: 
+    179:         char print [100] = "";
+
+# 2 0x00426CF1 in C:\Cpp\games\frogs\v4_frogs.exe: main() at C:/Cpp/games/frogs/v4_frogs.cpp (113):
+
+    111: 
+    112:     MoveBalls (name_user, &continue_game, &r_ball, &number_main_heroes, name_main_heroes, heroes_4,
+=>  113:                folder_heroes, name_file_image1, name_file_image2);
+    114: 
+    115:     txEnd ();
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool {anonymous}::TX::txTransparentBlt(HDC, double, double, double, double, HDC, double, double, COLORREF) at C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h (11367):
+
+  11365:     {
+  11366: $1  if (_TX_HDC_FAILED (destImage))   return false;
+=>11367: $   if (_TX_HDC_FAILED (sourceImage)) return false;
+  11368: 
+  11369: $   POINT size = txGetExtent (sourceImage);
+
+# 1 in void MoveBalls(char*, int*, int*, int*, char*, char*, const char*, char*, char*) at C:\Cpp\games\frogs\v4_frogs.cpp (177):
+
+    175: 
+    176:         for (int i = 0; i < N_BALLS; i++)
+=>  177:             txTransparentBlt (txDC(), (balls[i].x - balls[i].r), (balls[i].y - balls[i].r), 0, 0, balls[i].picture);
+    178: 
+    179:         char print [100] = "";
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h
+Compiled:	May 14 2019 16:37:14, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	May 14 2019 16:37:18
+
+Run file:	C:\Cpp\games\frogs\v4_frogs.exe
+Directory:	C:\Cpp\games\frogs
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib сообщает:
+
+Программа: C:\Cpp\games\frogs\v4_frogs.exe, файл: C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h, строка: 11367, функция: bool {anonymous}::TX::txTransparentBlt(HDC, double, double, double, double, HDC, double, double, COLORREF),
+
+Сообщение: Параметр "sourceImage" неверен. Возможно, этот холст не создан, или уже уничтожен, или не загрузилась картинка.
+
+#1: TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300], Instance: 0x005042D4 (32-bit), Flags: CMdRe0, Thread: 0x1630 (Main), GetLastError(): 13 (Недопустимые данные). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041FA08 in C:\Cpp\games\frogs\v4_frogs.exe: txTransparentBlt() at C:/Users/Home/Downloads/CodeBlocks/TX/TXLib.h (11367)
+
+# 1 0x004272CE in C:\Cpp\games\frogs\v4_frogs.exe: MoveBalls() at C:/Cpp/games/frogs/v4_frogs.cpp (178):
+
+    176: 
+    177:         for (int i = 0; i < N_BALLS; i++)
+=>  178:             txTransparentBlt (txDC(), (balls[i].x - balls[i].r), (balls[i].y - balls[i].r), 0, 0, balls[i].picture);
+    179: 
+    180:         char print [100] = "";
+
+# 2 0x00426CF1 in C:\Cpp\games\frogs\v4_frogs.exe: main() at C:/Cpp/games/frogs/v4_frogs.cpp (114):
+
+    112: 
+    113:     MoveBalls (name_user, &continue_game, &r_ball, &number_main_heroes, name_main_heroes, heroes_4,
+=>  114:                folder_heroes, name_file_image1, name_file_image2);
+    115: 
+    116:     txEnd ();
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool {anonymous}::TX::txTransparentBlt(HDC, double, double, double, double, HDC, double, double, COLORREF) at C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h (11367):
+
+  11365:     {
+  11366: $1  if (_TX_HDC_FAILED (destImage))   return false;
+=>11367: $   if (_TX_HDC_FAILED (sourceImage)) return false;
+  11368: 
+  11369: $   POINT size = txGetExtent (sourceImage);
+
+# 1 in void MoveBalls(char*, int*, int*, int*, char*, char*, char*, char*, char*) at C:\Cpp\games\frogs\v4_frogs.cpp (178):
+
+    176: 
+    177:         for (int i = 0; i < N_BALLS; i++)
+=>  178:             txTransparentBlt (txDC(), (balls[i].x - balls[i].r), (balls[i].y - balls[i].r), 0, 0, balls[i].picture);
+    179: 
+    180:         char print [100] = "";
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h
+Compiled:	May 14 2019 18:31:08, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	May 14 2019 18:31:12
+
+Run file:	C:\Cpp\games\frogs\v4_frogs.exe
+Directory:	C:\Cpp\games\frogs
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib сообщает:
+
+Программа: C:\Cpp\games\frogs\v4_frogs.exe, файл: C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h, строка: 11367, функция: bool {anonymous}::TX::txTransparentBlt(HDC, double, double, double, double, HDC, double, double, COLORREF),
+
+Сообщение: Параметр "sourceImage" неверен. Возможно, этот холст не создан, или уже уничтожен, или не загрузилась картинка.
+
+#1: TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300], Instance: 0x005042D4 (32-bit), Flags: CMdRe0, Thread: 0x11DC (Main), GetLastError(): 13 (Недопустимые данные). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041FA08 in C:\Cpp\games\frogs\v4_frogs.exe: txTransparentBlt() at C:/Users/Home/Downloads/CodeBlocks/TX/TXLib.h (11367)
+
+# 1 0x004272CE in C:\Cpp\games\frogs\v4_frogs.exe: MoveBalls() at C:/Cpp/games/frogs/v4_frogs.cpp (178):
+
+    176: 
+    177:         for (int i = 0; i < N_BALLS; i++)
+=>  178:             txTransparentBlt (txDC(), (balls[i].x - balls[i].r), (balls[i].y - balls[i].r), 0, 0, balls[i].picture);
+    179: 
+    180:         char print [100] = "";
+
+# 2 0x00426CF1 in C:\Cpp\games\frogs\v4_frogs.exe: main() at C:/Cpp/games/frogs/v4_frogs.cpp (114):
+
+    112: 
+    113:     MoveBalls (name_user, &continue_game, &r_ball, &number_main_heroes, name_main_heroes, heroes_4,
+=>  114:                folder_heroes, name_file_image1, name_file_image2);
+    115: 
+    116:     txEnd ();
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool {anonymous}::TX::txTransparentBlt(HDC, double, double, double, double, HDC, double, double, COLORREF) at C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h (11367):
+
+  11365:     {
+  11366: $1  if (_TX_HDC_FAILED (destImage))   return false;
+=>11367: $   if (_TX_HDC_FAILED (sourceImage)) return false;
+  11368: 
+  11369: $   POINT size = txGetExtent (sourceImage);
+
+# 1 in void MoveBalls(char*, int*, int*, int*, char*, char*, char*, char*, char*) at C:\Cpp\games\frogs\v4_frogs.cpp (178):
+
+    176: 
+    177:         for (int i = 0; i < N_BALLS; i++)
+=>  178:             txTransparentBlt (txDC(), (balls[i].x - balls[i].r), (balls[i].y - balls[i].r), 0, 0, balls[i].picture);
+    179: 
+    180:         char print [100] = "";
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h
+Compiled:	May 14 2019 18:34:04, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	May 14 2019 18:34:08
+
+Run file:	C:\Cpp\games\frogs\v4_frogs.exe
+Directory:	C:\Cpp\games\frogs
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib сообщает:
+
+Программа: C:\Cpp\games\frogs\v4_frogs.exe, файл: C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h, строка: 11367, функция: bool {anonymous}::TX::txTransparentBlt(HDC, double, double, double, double, HDC, double, double, COLORREF),
+
+Сообщение: Параметр "sourceImage" неверен. Возможно, этот холст не создан, или уже уничтожен, или не загрузилась картинка.
+
+#1: TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300], Instance: 0x005042D4 (32-bit), Flags: CMdRe0, Thread: 0x13A4 (Main), GetLastError(): 13 (Недопустимые данные). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041FA08 in C:\Cpp\games\frogs\v4_frogs.exe: txTransparentBlt() at C:/Users/Home/Downloads/CodeBlocks/TX/TXLib.h (11367)
+
+# 1 0x004272CE in C:\Cpp\games\frogs\v4_frogs.exe: MoveBalls() at C:/Cpp/games/frogs/v4_frogs.cpp (178):
+
+    176: 
+    177:         for (int i = 0; i < N_BALLS; i++)
+=>  178:             txTransparentBlt (txDC(), (balls[i].x - balls[i].r), (balls[i].y - balls[i].r), 0, 0, balls[i].picture);
+    179: 
+    180:         char print [100] = "";
+
+# 2 0x00426CF1 in C:\Cpp\games\frogs\v4_frogs.exe: main() at C:/Cpp/games/frogs/v4_frogs.cpp (114):
+
+    112: 
+    113:     MoveBalls (name_user, &continue_game, &r_ball, &number_main_heroes, name_main_heroes, heroes_4,
+=>  114:                folder_heroes, name_file_image1, name_file_image2);
+    115: 
+    116:     txEnd ();
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool {anonymous}::TX::txTransparentBlt(HDC, double, double, double, double, HDC, double, double, COLORREF) at C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h (11367):
+
+  11365:     {
+  11366: $1  if (_TX_HDC_FAILED (destImage))   return false;
+=>11367: $   if (_TX_HDC_FAILED (sourceImage)) return false;
+  11368: 
+  11369: $   POINT size = txGetExtent (sourceImage);
+
+# 1 in void MoveBalls(char*, int*, int*, int*, char*, char*, char*, char*, char*) at C:\Cpp\games\frogs\v4_frogs.cpp (178):
+
+    176: 
+    177:         for (int i = 0; i < N_BALLS; i++)
+=>  178:             txTransparentBlt (txDC(), (balls[i].x - balls[i].r), (balls[i].y - balls[i].r), 0, 0, balls[i].picture);
+    179: 
+    180:         char print [100] = "";
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 105, Date: 2018-12-19 00:00:00 +0300]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Home\Downloads\CodeBlocks\TX\TXLib.h
+Compiled:	May 14 2019 18:44:52, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	May 14 2019 18:44:56
+
+Run file:	C:\Cpp\games\frogs\v4_frogs.exe
+Directory:	C:\Cpp\games\frogs
+
+--------------------------------------------------

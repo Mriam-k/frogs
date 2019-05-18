@@ -7,14 +7,12 @@
 //-----------------------------------------------------------------------------
 int main ()
     {
-    HDC main_character = txLoadImage (name_file_image1);
-    HDC character1     = txLoadImage (name_file_image2);
-
+    HDC main_character = txLoadImage ("v2_Images\1_30_worm2.bmp");
     if (!main_character) printf ("Ќе заружаетс€ картинка главного персонажа");
-    if (!character1)     printf ("Ќе заружаетс€ картинка персонажа N1");
-    
-    txDeleteDC (character1);
+
+
+
     txDeleteDC (main_character);
-    
+
     return 1;
     }

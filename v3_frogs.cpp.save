@@ -11,13 +11,15 @@ const int FREE_BALL    = 0;
 const int N_BALLS = 7;
 
 const int BUTTON_USERNAME         = 0;
-const int BUTTON_HEROES_FLY       = 2;
-const int BUTTON_HEROES_DRAGONFLY = 3;
-const int BUTTON_HEROES_BUMBLEBEE = 4;
+const int BUTTON_HEROES_1       = 2;
+const int BUTTON_HEROES_2 = 3;
+const int BUTTON_HEROES_3 = 4;
 const int BUTTON_HEROES_SIZE_40   = 6;
 const int BUTTON_HEROES_SIZE_60   = 7;
 
 const bool DEBUG = false;
+
+const int SIZ_STR = 50;
 
 //-----------------------------------------------------------------------------
 
@@ -46,8 +48,8 @@ struct Button
 //-----------------------------------------------------------------------------
 
 void     MoveBalls                (char* name_user, int* continue_game, int* r_ball, int* number_main_heroes,
-                                   char* name_main_heroes, char* heroes_4, const char* folder_pictures_heroes);
-                                   
+                                   char* name_main_heroes, char* heroes_4, const char* folder_heroes);
+
 void     DrawBackground           ();
 void     Count                    (int* balli, int* level, int* counter, Ball balls[]);
 void     CalculateBalli           (Ball balls[], int* balli);
@@ -64,14 +66,18 @@ int      Pause                    ();
 bool     In_area                  (POINT mouse_pos, RECT area);
 void     Rect_Area_Button         (RECT area, COLORREF color, const char text[]);
 
-int      CreateFileConfig         (const char name_file[], const char folder_pictures_heroes[]);
-int      Read_Configuration_File  (char* heroes_1, char* heroes_2, char* heroes_3, char* heroes_4);
+int      CreateFileConfig         (const char name_file[], const char folder_heroes[]);
+int      Read_Configuration_File  (char* heroes_1, char* heroes_2, char* heroes_3, char* heroes_4, char* folder_heroes);
 
-int      Press_Button_MenuSkin    (char* heroes_1,              char* heroes_2,  char* heroes_3, 
-                                   char* heroes_4,              char* name_user, int*  continue_game, 
-                                   int*  number_main_heroes,    int* r_ball,     char* name_main_heroes, 
-                                   char* folder_pictures_heroes);
-int      Press_Button_Menu        (char* heroes_1, char* heroes_2, char* heroes_3, char* heroes_4, char* name_user, int* continue_game, int* number_main_heroes, int* r_ball, char* name_main_heroes, char* folder_pictures_heroes);
+int      Press_Button_MenuSkin    (char* heroes_1,              char* heroes_2,  char* heroes_3,
+                                   char* heroes_4,              char* name_user, int*  continue_game,
+                                   int*  number_main_heroes,    int* r_ball,     char* name_main_heroes,
+                                   char* folder_heroes);
+
+int      Press_Button_Menu        (char* heroes_1,              char* heroes_2,  char* heroes_3,
+                                   char* heroes_4,              char* name_user, int* continue_game,
+                                   int* number_main_heroes,     int* r_ball,     char* name_main_heroes,
+                                   char* folder_heroes);
 
 //-----------------------------------------------------------------------------
 
@@ -81,23 +87,27 @@ int main ()
 
     txBegin ();
 
-    char folder_pictures_heroes[50] = "v1_Images";
-    char heroes_1[50] = "";
-    char heroes_2[50] = "";
-    char heroes_3[50] = "";
-    char heroes_4[50] = "frog";
+    char folder_heroes[SIZ_STR]    = "v1_Images";
+    char heroes_1[SIZ_STR]         = "";
+    char heroes_2[SIZ_STR]         = "";
+    char heroes_3[SIZ_STR]         = "";
+    char heroes_4[SIZ_STR]         = "frog";
+    char name_main_heroes[SIZ_STR] = "fly";
 
-    char name_user[100] = "user";
-    int  continue_game = 0;
-    int  r_ball = 30;
-    int  number_main_heroes = 1;
-    char name_main_heroes[50] = "fly";
+    int  number_main_heroes   = 1;
+
+    int  continue_game        = 0;
+    int  r_ball               = 30;
+
+    char name_user[100]       = "user";
+
+
 
     Press_Button_MenuSkin (heroes_1, heroes_2, heroes_3, heroes_4, name_user, &continue_game,
-                           &number_main_heroes, &r_ball, name_main_heroes, folder_pictures_heroes);
+                           &number_main_heroes, &r_ball, name_main_heroes, folder_heroes);
 
     MoveBalls (name_user, &continue_game, &r_ball, &number_main_heroes, name_main_heroes, heroes_4,
-               folder_pictures_heroes);
+               folder_heroes);
 
     txEnd ();
 
@@ -115,16 +125,19 @@ void DrawBackground ()
 
 //-----------------------------------------------------------------------------
 
-void MoveBalls (char* name_user, int* continue_game, int* r_ball, int* number_main_heroes, char* name_main_heroes, char* heroes_4, const char* folder_pictures_heroes)
+void MoveBalls (char* name_user, int* continue_game, int* r_ball, int* number_main_heroes,
+                char* name_main_heroes, char* heroes_4, const char* folder_heroes)
     {
     char name_file_image[100] = "";
 
-    sprintf (name_file_image, "%s%s%d%s%d%s%s%s", folder_pictures_heroes, "\\", *number_main_heroes, "_", *r_ball, "_", name_main_heroes, ".bmp");
-    HDC main_character = txLoadImage (name_file_image);
+    sprintf (name_file_image, "%s%s%d%s%d%s%s%s", folder_heroes, "\\", *number_main_heroes, "_", *r_ball, "_", name_main_heroes, ".bmp");
+    printf  ("(%s)", name_file_image);
+    //HDC main_character = txLoadImage (name_file_image);
 
-    sprintf (name_file_image, "%s%s%d%s%d%s%s%s", folder_pictures_heroes, "\\", 4, "_", *r_ball, "_", heroes_4, ".bmp");
-    HDC character1 = txLoadImage (name_file_image);
-
+    sprintf (name_file_image, "%s%s%d%s%d%s%s%s", folder_heroes, "\\", 4, "_", *r_ball, "_", heroes_4, ".bmp");
+    printf  (" (%s)", name_file_image);
+    //HDC character1 = txLoadImage (name_file_image);
+    /*
     if (!main_character) printf ("Не заружается картинка главного персонажа");
     if (!character1)     printf ("Не заружается картинка персонажа N1");
 
@@ -144,14 +157,7 @@ void MoveBalls (char* name_user, int* continue_game, int* r_ball, int* number_ma
     txSetTextAlign (TA_CENTER);
 
     if (*continue_game == 1)
-        //{
         ReadFromFile (&balli, &level, balls, name_user);
-        //if (*sign_color_change == 1)
-        //    {
-        //    balls[0].color_ball    = *ball_0_color;
-        //    balls[0].color_contour = *ball_0_color;
-        //    }
-        //}
 
     while (!txGetAsyncKeyState (VK_ESCAPE))
         {
@@ -168,7 +174,7 @@ void MoveBalls (char* name_user, int* continue_game, int* r_ball, int* number_ma
 
         CalculateBalli (balls, &balli);
 
-        for (int i = 0; i < N_BALLS; i++) //balls[i].Drow ();
+        for (int i = 0; i < N_BALLS; i++)
             txTransparentBlt (txDC(), (balls[i].x - balls[i].r), (balls[i].y - balls[i].r), 0, 0, balls[i].picture);
 
         char print [100] = "";
@@ -180,11 +186,9 @@ void MoveBalls (char* name_user, int* continue_game, int* r_ball, int* number_ma
         }
 
         txDeleteDC (character1);
-        //txDeleteDC (character2);
-        //txDeleteDC (character3);
         txDeleteDC (main_character);
 
-    WriteToFile (&balli, &level, balls, name_user);
+    WriteToFile (&balli, &level, balls, name_user); */
 
     }
 
@@ -211,15 +215,6 @@ void Ball::Drive ()
             }
         }
     }
-
-//-----------------------------------------------------------------------------
-
-//void Ball::Drow ()
-//    {
-//    txSetColor     (this->color_contour, this->thickness_contour);
-//    txSetFillColor (color_ball);
-//    txCircle (x, y, r);
-//    }
 
 //-----------------------------------------------------------------------------
 
@@ -332,13 +327,6 @@ int ReadFromFile (int* balli, int* level, Ball balls[], char* name_user)
                 break;
                 }
 
-            //if (n == 0)
-            //    {
-            //    balls[0].color_ball = ReadFromFile_Color (file_uzer);
-            //    balls[0].color_contour = balls[0].color_ball;
-            //    }
-            //else ReadFromFile_Color (file_uzer);
-
             if (balls[n].x < 205) balls[n].x = 205;
             if (balls[n].x > 675) balls[n].x = 675;
             if (balls[n].y < 95 ) balls[n].y = 95;
@@ -372,7 +360,6 @@ int WriteToFile (int* balli, int* level, Ball balls[], char* name_user)
         fprintf (file_uzer, "[%d] ", i);
         fprintf (file_uzer, "x  = %4d, y  = %4d, ", balls[i].x,  balls[i].y);
         fprintf (file_uzer, "vx = %4d, vy = %4d,",   balls[i].vx, balls[i].vy);
-        //WriteToFile_Color (balls[i].color_ball, file_uzer);
         fprintf (file_uzer, "\n");
         }
 
@@ -419,7 +406,9 @@ int DialogueWithUser_Username(char* name_user, int* continue_game)
 
     return 0;
     }
+
 //-----------------------------------------------------------------------------
+
 int Pause ()
     {
     while (!txGetAsyncKeyState (VK_SPACE))
@@ -431,6 +420,7 @@ int Pause ()
     }
 
 //-----------------------------------------------------------------------------
+
 int Menu (Button buttons[], int N_Button)
     {
     int button_pressed = -1;
@@ -494,6 +484,7 @@ void Rect_Area_Button (RECT area, COLORREF color, const char text[])
     }
 
 //-----------------------------------------------------------------------------
+
 bool In_area (POINT mouse_pos, RECT area)
     {
     return ((area.left <= mouse_pos.x) && (mouse_pos.x <= area.right ) &&
@@ -501,9 +492,10 @@ bool In_area (POINT mouse_pos, RECT area)
     }
 
 //-----------------------------------------------------------------------------
-int CreateFileConfig (const char name_file[], const char folder_pictures_heroes[])
+
+int CreateFileConfig (const char name_file[], const char folder_heroes[])
     {
-    DIR *dir_game = opendir(folder_pictures_heroes);
+    DIR *dir_game = opendir(folder_heroes);
 
     if (!dir_game)
         {
@@ -521,6 +513,9 @@ int CreateFileConfig (const char name_file[], const char folder_pictures_heroes[
         }
 
     int n = 0;
+
+    fprintf (file_config_w, "%s\n", folder_heroes);
+
     while (true)
         {
         dirent *file_data = readdir(dir_game);
@@ -542,7 +537,9 @@ int CreateFileConfig (const char name_file[], const char folder_pictures_heroes[
     }
 
 //-----------------------------------------------------------------------------
-int Read_Configuration_File (char* heroes_1, char* heroes_2, char* heroes_3, char* heroes_4)
+
+int Read_Configuration_File (char* heroes_1, char* heroes_2, char* heroes_3,
+                             char* heroes_4, char* folder_heroes)
     {
     int  number_hero = 0,   size_hero = 0;
     char name_hero[50] = "";
@@ -557,6 +554,11 @@ int Read_Configuration_File (char* heroes_1, char* heroes_2, char* heroes_3, cha
         fclose (file_config_r);
         return 0;
         }
+
+    fgets (folder_heroes, SIZ_STR, file_config_r);
+    int len = strlen (folder_heroes);
+    folder_heroes [len - 1] = '\0';
+    printf ("(%s)\n", folder_heroes);
 
     for (int str = 1; !feof (file_config_r); str++)
             {
@@ -588,12 +590,12 @@ int Read_Configuration_File (char* heroes_1, char* heroes_2, char* heroes_3, cha
 
 int Press_Button_MenuSkin (char* heroes_1, char* heroes_2, char* heroes_3, char* heroes_4, char* name_user,
                            int* continue_game, int* number_main_heroes, int* r_ball, char* name_main_heroes,
-                           char* folder_pictures_heroes)
+                           char* folder_heroes)
     {
-    Button buttons_skin[] = {{{210, 70,  445, 115}, RGB (0  , 0  , 0  ), "Skin"       },
-                             {{210, 180, 445, 225}, RGB (255, 255, 70 ), "version N1" },
-                             {{210, 235, 445, 280}, RGB (255, 255, 70 ), "version N2" },
-                             {{480, 207, 665, 252}, RGB (255, 255, 128), "NEXT"       }};
+    Button buttons_skin[] = {{{210, 70,  445, 115}, RGB (0  , 0  , 0  ), "Skin"       }, // 0
+                             {{210, 180, 445, 225}, RGB (255, 255, 70 ), "version N1" }, // 1
+                             {{210, 235, 445, 280}, RGB (255, 255, 70 ), "version N2" }, // 2
+                             {{480, 207, 665, 252}, RGB (255, 255, 128), "NEXT"       }};// 3
 
     while (true)
         {
@@ -602,25 +604,26 @@ int Press_Button_MenuSkin (char* heroes_1, char* heroes_2, char* heroes_3, char*
         switch (pressed_buttons_skin)
             {
             case 1:
-                strncpy (folder_pictures_heroes, "v1_Images", 49);
-                CreateFileConfig ("configuration.txt", folder_pictures_heroes);
+                strncpy (folder_heroes, "v1_Images", SIZ_STR - 1);
+                CreateFileConfig ("configuration.txt", folder_heroes);
                 printf ("Вы выбрали skin N1\n");
-                if (DEBUG) printf ("Папка с картинками: %s", folder_pictures_heroes);
+                if (DEBUG) printf ("Папка с картинками: %s", folder_heroes);
                 break;
 
             case 2:
-                strncpy (folder_pictures_heroes, "v2_Images", 49);
-                CreateFileConfig ("configuration.txt", folder_pictures_heroes);
+                strncpy (folder_heroes, "v2_Images", SIZ_STR - 1);
+                CreateFileConfig ("configuration.txt", folder_heroes);
                 printf ("Вы выбрали skin N2\n");
-                if (DEBUG) printf ("Папка с картинками: %s", folder_pictures_heroes);
+                if (DEBUG) printf ("Папка с картинками: %s", folder_heroes);
                 break;
 
             case 3:
-                Read_Configuration_File (heroes_1, heroes_2, heroes_3, heroes_4);
+                Read_Configuration_File (heroes_1, heroes_2, heroes_3, heroes_4, folder_heroes);
                 txSetFillColor (TX_BLACK);
                 txClear();
+                if (DEBUG) printf ("1.%s\n2.%s\n3.%s\n4.%s\n", heroes_1, heroes_2, heroes_3, heroes_4);
                 Press_Button_Menu (heroes_1, heroes_2, heroes_3, heroes_4, name_user, continue_game,
-                                   number_main_heroes, r_ball, name_main_heroes, folder_pictures_heroes);
+                                   number_main_heroes, r_ball, name_main_heroes, folder_heroes);
                 return 1;
 
             default:
@@ -633,9 +636,10 @@ int Press_Button_MenuSkin (char* heroes_1, char* heroes_2, char* heroes_3, char*
     }
 
 //-----------------------------------------------------------------------------
+
 int Press_Button_Menu (char* heroes_1, char* heroes_2, char* heroes_3, char* heroes_4, char* name_user,
                        int* continue_game, int* number_main_heroes, int* r_ball, char* name_main_heroes,
-                       char* folder_pictures_heroes)
+                       char* folder_heroes)
     {
     Button buttons[] = {{{40,  70,  225, 115}, RGB (255, 255, 128), "Username"      }, // 0
                         {{260, 70,  445, 115}, RGB (0  , 0  , 0  ), "Heroes:"       }, // 1
@@ -664,7 +668,7 @@ int Press_Button_Menu (char* heroes_1, char* heroes_2, char* heroes_3, char* her
                 txUpdateWindow (false);
                 break;
 
-            case BUTTON_HEROES_FLY:
+            case BUTTON_HEROES_1:
                 *number_main_heroes = 1;
                 strncpy (name_main_heroes, heroes_1, sizeof(buttons[2].text)-1);
                 printf ("Главным героем будет %s\n", name_main_heroes);
@@ -673,7 +677,7 @@ int Press_Button_Menu (char* heroes_1, char* heroes_2, char* heroes_3, char* her
                 txClear ();
                 break;
 
-            case BUTTON_HEROES_DRAGONFLY:
+            case BUTTON_HEROES_2:
                 *number_main_heroes = 2;
                 strncpy (name_main_heroes, heroes_2, sizeof(buttons[3].text)-1);
                 printf ("Главным героем будет %s\n", name_main_heroes);
@@ -681,7 +685,7 @@ int Press_Button_Menu (char* heroes_1, char* heroes_2, char* heroes_3, char* her
                 txClear ();
                 break;
 
-            case BUTTON_HEROES_BUMBLEBEE:
+            case BUTTON_HEROES_3:
                 *number_main_heroes = 3;
                 strncpy (name_main_heroes, heroes_3, sizeof(buttons[4].text)-1);
                 printf ("Главным героем будет %s\n", name_main_heroes);
@@ -710,7 +714,7 @@ int Press_Button_Menu (char* heroes_1, char* heroes_2, char* heroes_3, char* her
                 txSetFillColor (TX_BLACK);
                 txClear();
                 Press_Button_MenuSkin (heroes_1, heroes_2, heroes_3, heroes_4, name_user, continue_game,
-                                       number_main_heroes, r_ball, name_main_heroes, folder_pictures_heroes);
+                                       number_main_heroes, r_ball, name_main_heroes, folder_heroes);
                 return 1;
 
             default:

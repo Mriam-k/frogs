@@ -11,15 +11,13 @@ const int FREE_BALL    = 0;
 const int N_BALLS = 7;
 
 const int BUTTON_USERNAME         = 0;
-const int BUTTON_HEROES_1       = 2;
-const int BUTTON_HEROES_2 = 3;
-const int BUTTON_HEROES_3 = 4;
+const int BUTTON_HEROES_FLY       = 2;
+const int BUTTON_HEROES_DRAGONFLY = 3;
+const int BUTTON_HEROES_BUMBLEBEE = 4;
 const int BUTTON_HEROES_SIZE_40   = 6;
 const int BUTTON_HEROES_SIZE_60   = 7;
 
 const bool DEBUG = false;
-
-const int SIZ_STR = 50;
 
 //-----------------------------------------------------------------------------
 
@@ -48,7 +46,8 @@ struct Button
 //-----------------------------------------------------------------------------
 
 void     MoveBalls                (char* name_user, int* continue_game, int* r_ball, int* number_main_heroes,
-                                   char* name_main_heroes, char* heroes_4, const char* folder_heroes);
+                                   char* name_main_heroes, char* heroes_4, char* folder_heroes,
+                                   char* name_file_image1, char* name_file_image2);
 
 void     DrawBackground           ();
 void     Count                    (int* balli, int* level, int* counter, Ball balls[]);
@@ -67,7 +66,7 @@ bool     In_area                  (POINT mouse_pos, RECT area);
 void     Rect_Area_Button         (RECT area, COLORREF color, const char text[]);
 
 int      CreateFileConfig         (const char name_file[], const char folder_heroes[]);
-int      Read_Configuration_File  (char* heroes_1, char* heroes_2, char* heroes_3, char* heroes_4, char* folder_heroes);
+int      Read_Configuration_File  (char* heroes_1, char* heroes_2, char* heroes_3, char* heroes_4);
 
 int      Press_Button_MenuSkin    (char* heroes_1,              char* heroes_2,  char* heroes_3,
                                    char* heroes_4,              char* name_user, int*  continue_game,
@@ -79,6 +78,10 @@ int      Press_Button_Menu        (char* heroes_1,              char* heroes_2, 
                                    int* number_main_heroes,     int* r_ball,     char* name_main_heroes,
                                    char* folder_heroes);
 
+int      Loading_Pictures         (int* r_ball, int* number_main_heroes,
+                                   char* name_file_image1, char* name_file_image2,
+                                   char* folder_heroes);
+
 //-----------------------------------------------------------------------------
 
 int main ()
@@ -87,12 +90,12 @@ int main ()
 
     txBegin ();
 
-    char folder_heroes[SIZ_STR]    = "v1_Images";
-    char heroes_1[SIZ_STR]         = "";
-    char heroes_2[SIZ_STR]         = "";
-    char heroes_3[SIZ_STR]         = "";
-    char heroes_4[SIZ_STR]         = "frog";
-    char name_main_heroes[SIZ_STR] = "fly";
+    char folder_heroes[50]    = "v1_Images";
+    char heroes_1[50]         = "";
+    char heroes_2[50]         = "";
+    char heroes_3[50]         = "";
+    char heroes_4[50]         = "frog";
+    char name_main_heroes[50] = "fly";
 
     int  number_main_heroes   = 1;
 
@@ -101,13 +104,14 @@ int main ()
 
     char name_user[100]       = "user";
 
-
+    char name_file_image1[100] = "";
+    char name_file_image2[100] = "";
 
     Press_Button_MenuSkin (heroes_1, heroes_2, heroes_3, heroes_4, name_user, &continue_game,
                            &number_main_heroes, &r_ball, name_main_heroes, folder_heroes);
 
     MoveBalls (name_user, &continue_game, &r_ball, &number_main_heroes, name_main_heroes, heroes_4,
-               folder_heroes);
+               folder_heroes, name_file_image1, name_file_image2);
 
     txEnd ();
 
@@ -126,17 +130,16 @@ void DrawBackground ()
 //-----------------------------------------------------------------------------
 
 void MoveBalls (char* name_user, int* continue_game, int* r_ball, int* number_main_heroes,
-                char* name_main_heroes, char* heroes_4, const char* folder_heroes)
+                char* name_main_heroes, char* heroes_4, char* folder_heroes,
+                char* name_file_image1, char* name_file_image2)
     {
-    char name_file_image[100] = "";
+    Loading_Pictures (r_ball, number_main_heroes, name_file_image1, name_file_image2, folder_heroes);
+    if (DEBUG) printf ("%s%s", name_file_image1, name_file_image2);
 
-    sprintf (name_file_image, "%s%s%d%s%d%s%s%s", folder_heroes, "\\", *number_main_heroes, "_", *r_ball, "_", name_main_heroes, ".bmp");
-    if (DEBUG) printf  ("(%s)", name_file_image);
-    HDC main_character = txLoadImage (name_file_image);
 
-    sprintf (name_file_image, "%s%s%d%s%d%s%s%s", folder_heroes, "\\", 4, "_", *r_ball, "_", heroes_4, ".bmp");
-    if (DEBUG) printf  (" (%s)", name_file_image);
-    HDC character1 = txLoadImage (name_file_image);
+
+    HDC main_character = txLoadImage (name_file_image1);
+    HDC character1     = txLoadImage (name_file_image2);
 
     if (!main_character) printf ("Не заружается картинка главного персонажа");
     if (!character1)     printf ("Не заружается картинка персонажа N1");
@@ -185,10 +188,10 @@ void MoveBalls (char* name_user, int* continue_game, int* r_ball, int* number_ma
         txSleep (GLOBAL_SLEEP);
         }
 
-        txDeleteDC (character1);
-        txDeleteDC (main_character);
-
     WriteToFile (&balli, &level, balls, name_user);
+
+    txDeleteDC (character1);
+    txDeleteDC (main_character);
 
     }
 
@@ -513,9 +516,6 @@ int CreateFileConfig (const char name_file[], const char folder_heroes[])
         }
 
     int n = 0;
-
-    fprintf (file_config_w, "%s\n", folder_heroes);
-
     while (true)
         {
         dirent *file_data = readdir(dir_game);
@@ -538,8 +538,7 @@ int CreateFileConfig (const char name_file[], const char folder_heroes[])
 
 //-----------------------------------------------------------------------------
 
-int Read_Configuration_File (char* heroes_1, char* heroes_2, char* heroes_3,
-                             char* heroes_4, char* folder_heroes)
+int Read_Configuration_File (char* heroes_1, char* heroes_2, char* heroes_3, char* heroes_4)
     {
     int  number_hero = 0,   size_hero = 0;
     char name_hero[50] = "";
@@ -554,11 +553,6 @@ int Read_Configuration_File (char* heroes_1, char* heroes_2, char* heroes_3,
         fclose (file_config_r);
         return 0;
         }
-
-    fgets (folder_heroes, SIZ_STR, file_config_r);
-    int len = strlen (folder_heroes);
-    folder_heroes [len - 1] = '\0';
-    if (DEBUG) printf ("(%s)\n", folder_heroes);
 
     for (int str = 1; !feof (file_config_r); str++)
             {
@@ -604,24 +598,23 @@ int Press_Button_MenuSkin (char* heroes_1, char* heroes_2, char* heroes_3, char*
         switch (pressed_buttons_skin)
             {
             case 1:
-                strncpy (folder_heroes, "v1_Images", SIZ_STR - 1);
+                strncpy (folder_heroes, "v1_Images", 49);
                 CreateFileConfig ("configuration.txt", folder_heroes);
                 printf ("Вы выбрали skin N1\n");
                 if (DEBUG) printf ("Папка с картинками: %s", folder_heroes);
                 break;
 
             case 2:
-                strncpy (folder_heroes, "v2_Images", SIZ_STR - 1);
+                strncpy (folder_heroes, "v2_Images", 49);
                 CreateFileConfig ("configuration.txt", folder_heroes);
                 printf ("Вы выбрали skin N2\n");
                 if (DEBUG) printf ("Папка с картинками: %s", folder_heroes);
                 break;
 
             case 3:
-                Read_Configuration_File (heroes_1, heroes_2, heroes_3, heroes_4, folder_heroes);
+                Read_Configuration_File (heroes_1, heroes_2, heroes_3, heroes_4);
                 txSetFillColor (TX_BLACK);
                 txClear();
-                if (DEBUG) printf ("1.%s\n2.%s\n3.%s\n4.%s\n", heroes_1, heroes_2, heroes_3, heroes_4);
                 Press_Button_Menu (heroes_1, heroes_2, heroes_3, heroes_4, name_user, continue_game,
                                    number_main_heroes, r_ball, name_main_heroes, folder_heroes);
                 return 1;
@@ -668,26 +661,26 @@ int Press_Button_Menu (char* heroes_1, char* heroes_2, char* heroes_3, char* her
                 txUpdateWindow (false);
                 break;
 
-            case BUTTON_HEROES_1:
+            case BUTTON_HEROES_FLY:
                 *number_main_heroes = 1;
-                strncpy (name_main_heroes, heroes_1, SIZ_STR-1);
+                strncpy (name_main_heroes, heroes_1, sizeof(buttons[2].text)-1);
                 printf ("Главным героем будет %s\n", name_main_heroes);
                 if (DEBUG) printf ("%d%s%d%s%s%s\n", *number_main_heroes, "_", *r_ball, "_", name_main_heroes, ".bmp");
                 txSetFillColor (TX_BLACK);
                 txClear ();
                 break;
 
-            case BUTTON_HEROES_2:
+            case BUTTON_HEROES_DRAGONFLY:
                 *number_main_heroes = 2;
-                strncpy (name_main_heroes, heroes_2, SIZ_STR-1);
+                strncpy (name_main_heroes, heroes_2, sizeof(buttons[3].text)-1);
                 printf ("Главным героем будет %s\n", name_main_heroes);
                 txSetFillColor (TX_BLACK);
                 txClear ();
                 break;
 
-            case BUTTON_HEROES_3:
+            case BUTTON_HEROES_BUMBLEBEE:
                 *number_main_heroes = 3;
-                strncpy (name_main_heroes, heroes_3, SIZ_STR-1);
+                strncpy (name_main_heroes, heroes_3, sizeof(buttons[4].text)-1);
                 printf ("Главным героем будет %s\n", name_main_heroes);
                 txSetFillColor (TX_BLACK);
                 txClear ();
@@ -726,18 +719,59 @@ int Press_Button_Menu (char* heroes_1, char* heroes_2, char* heroes_3, char* her
     }
 
 //-----------------------------------------------------------------------------
-/*
-int Loading_Pictures()
+
+int Loading_Pictures (int* r_ball, int* number_main_heroes,
+                      char* name_file_image1, char* name_file_image2, char* folder_heroes)
     {
-    char name_file_image[100] = "";
+    int  number_hero = 0,   size_hero = 0;
+    char name_hero[50] = "";
 
-    sprintf (name_file_image, "%d%s%d%s%s%s", *number_main_heroes, "_", *r_ball, "_", name_main_heroes, ".bmp");
-    HDC main_character = txLoadImage (name_file_image);
+    if (access ("configuration.txt", 0) != 0) CreateFileConfig ("configuration.txt", "v1_Images");
 
-    sprintf (name_file_image, "%d%s%d%s%s%s", 4, "_", *r_ball, "_", ,".bmp");
-    HDC character1 = txLoadImage (name_file_image);
+    FILE *file_config_r = fopen ("configuration.txt", "r");
 
-    if (!main_character) printf ("Не заружается картинка главного персонажа");
-    if (!character1)     printf ("Не заружается картинка персонажа N1");
+    if (file_config_r == NULL)
+        {
+        printf ("Ошибка при открытии файла с конфигурацией, для чтения");
+        fclose (file_config_r);
+        return 0;
+        }
+
+    for (int str = 1; !feof (file_config_r); str++)
+            {
+            char text[100] = "";
+            fgets (text, sizeof (text), file_config_r);
+
+            if (text[0] == '\0') continue;
+
+            if (sscanf (text, " %d_%d_%[^.].bmp", &number_hero, &size_hero, name_hero) == 3)
+                {
+                if ((number_hero == *number_main_heroes) && (size_hero == *r_ball))
+                    sprintf (name_file_image1, "%s%s%s", folder_heroes, "\\", text);
+                    sscanf  (name_file_image1, "%[^\n]", name_file_image1);
+
+                if ((number_hero == 4) && (size_hero == *r_ball))
+                    sprintf (name_file_image2, "%s%s%s", folder_heroes, "\\", text);
+                    sscanf  (name_file_image2, "%[^\n]", name_file_image2);
+                }
+            else
+                {
+                printf ("Ошибка чтения configuration.txt (%d): неверный формат имени файла %s\n", str, text);
+                break;
+                }
+            }
+
+    fclose (file_config_r);
+
+    //HDC main_character = txLoadImage (name_file_image1);
+    //HDC character1     = txLoadImage (name_file_image2);
+
+    //if (!main_character) printf ("Не заружается картинка главного персонажа");
+    //if (!character1)     printf ("Не заружается картинка персонажа N1");
+
+    //txDeleteDC (character1);
+    //txDeleteDC (main_character);
+
+    return 1;
     }
-*/
+

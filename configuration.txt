@@ -1,5 +1,7 @@
+v2_Images
 1_20_worm.bmp
 1_30_worm.bmp
+1_30_worm2.bmp
 2_20_caterpillar.bmp
 2_30_caterpillar.bmp
 3_20_snail.bmp
